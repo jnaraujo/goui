@@ -21,33 +21,28 @@ func Comp() ui.F {
 		Children: []ui.Element{
 			ui.Text{
 				Content:  "Hello, world!",
-				X:        100,
-				Y:        200,
 				Color:    rl.Orange,
 				FontSize: 16,
 			},
 			ui.Text{
 				Content:  "Im not here",
-				X:        130,
-				Y:        240,
 				Color:    rl.Blue,
 				FontSize: 30,
 			},
-			ui.F{
-				Children: []ui.Element{ui.Text{
-					Content:  "Hello, world!",
-					X:        10,
-					Y:        32,
-					Color:    rl.Orange,
-					FontSize: 16,
+			ui.Div{
+				Children: ui.F{
+					Children: []ui.Element{ui.Text{
+						Content:  "Hello, world!",
+						Color:    rl.Orange,
+						FontSize: 16,
+					},
+						ui.Text{
+							Content:  "Im not here",
+							Color:    rl.Blue,
+							FontSize: 30,
+						}},
 				},
-					ui.Text{
-						Content:  "Im not here",
-						X:        330,
-						Y:        140,
-						Color:    rl.Blue,
-						FontSize: 30,
-					}},
+				Padding: 8,
 			},
 		},
 	}
