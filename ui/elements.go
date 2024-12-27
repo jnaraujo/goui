@@ -15,11 +15,14 @@ type Fragment struct {
 type F = Fragment
 
 type App struct {
+	Title    string
+	Width    int32
+	Height   int32
 	Children Element
 }
 
 func (app *App) Run() {
-	rl.InitWindow(800, 450, "raylib [core] example - basic window")
+	rl.InitWindow(app.Width, app.Height, app.Title)
 	defer rl.CloseWindow()
 
 	rl.SetTargetFPS(60)
@@ -31,12 +34,29 @@ func (app *App) Run() {
 
 		rl.DrawText(fmt.Sprintf("FPS: %d", rl.GetFPS()), 10, 10, 16, rl.Black)
 
-		rl.DrawText("Congrats! You created your first window!", 190, 200, 20, rl.LightGray)
+		app.render(app.Children)
 
 		rl.EndDrawing()
 	}
 }
 
+func (app *App) render(element Element) {
+	switch e := element.(type) {
+	case Text:
+		rl.DrawText(e.Content, e.X, e.Y, e.FontSize, e.Color)
+	case Fragment:
+		for _, elm := range e.Children {
+			app.render(elm)
+		}
+	default:
+		fmt.Println("Unknown element.", e)
+	}
+}
+
 type Text struct {
-	Content string
+	Content  string
+	X        int32
+	Y        int32
+	Color    rl.Color
+	FontSize int32
 }
